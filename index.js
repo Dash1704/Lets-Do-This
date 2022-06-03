@@ -4,7 +4,7 @@ const getNames = async (eventId) => {
 
   const arrayOfNames = []
   raceDataView.map((info) => {
-    if(eventId == info.eventId){
+    if(eventId == info.eventId && info.status == 'CONFIRMED'){
       arrayOfNames.push(`${info.firstName} ` + `${info.lastName}`)
     }
   })
@@ -17,7 +17,7 @@ const getIntake = async (orgId) => {
 
   let sum = 0
   raceDataView.map((info) => {
-    if(orgId == info.organiserId){
+    if(orgId == info.organiserId && info.status == 'CONFIRMED'){
       sum += info.ticketPrice.value
     }
   })
