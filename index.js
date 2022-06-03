@@ -24,6 +24,22 @@ const getIntake = async (orgId) => {
   return `Intake: £${sum}`
 }
 
+const dateAndTime = async (eventId) => {
+  const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
+  const raceDataView = await raceData.json()
+
+  const date = []
+  raceDataView.map((info) => {
+    if(eventId == info.eventId){
+      date.push(info.raceStartDate)
+    }
+  })
+  const dateTimeSplit = date[0].split('T')
+  const timeOnly = dateTimeSplit[1].split('.')
+  return `Date: ${dateTimeSplit[0].split('-').reverse().join('/')} ` + `Time: ${timeOnly[0]}`
+  
+}
+
 const returnNames = async () => {
   const out1 = document.getElementById('output1')
   const userInput = document.getElementById('eventid').value
@@ -38,5 +54,14 @@ const returnIntake = async () => {
   out2.innerText = await intakeOnScreen
 }
 
+const returndateAndTime = async () => {
+  const out3 = document.getElementById('output3')
+  const userInput = document.getElementById('dateandtimeid').value
+  const dateOnScreen = dateAndTime(userInput)
+  out3.innerText = await dateOnScreen
+}
+
 document.getElementById('btn1').addEventListener('click', returnNames)
 document.getElementById('btn2').addEventListener('click', returnIntake)
+document.getElementById('btn3').addEventListener('click', returndateAndTime)
+
