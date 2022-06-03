@@ -8,21 +8,21 @@ const getNames = async (eventId) => {
       arrayOfNames.push(`${info.firstName} ` + `${info.lastName}`)
     }
   })
-  return arrayOfNames
+  return arrayOfNames.join('\r\n')
 }
 
-// const getIntake = async (organiserId) => {
-//   const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
-//   const raceDataView = await raceData.json()
+const getIntake = async (orgId) => {
+  const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
+  const raceDataView = await raceData.json()
 
-//   let sum = 0
-//   raceDataView.map((info) => {
-//     if(organiserId == info.organiserId){
-//       sum += info.ticketPrice.value
-//     }
-//   })
-//   console.log(sum)
-// }
+  let sum = 0
+  raceDataView.map((info) => {
+    if(orgId == info.organiserId){
+      sum += info.ticketPrice.value
+    }
+  })
+  return `Intake: £${sum}`
+}
 
 const returnNames = async () => {
   const out1 = document.getElementById('output1')
@@ -31,5 +31,12 @@ const returnNames = async () => {
   out1.innerText = await namesOnScreen
 }
 
-document.getElementById('btn1').addEventListener('click', returnNames)
+const returnIntake = async () => {
+  const out2 = document.getElementById('output2')
+  const userInput = document.getElementById('organiserid').value
+  const intakeOnScreen = getIntake(userInput)
+  out2.innerText = await intakeOnScreen
+}
 
+document.getElementById('btn1').addEventListener('click', returnNames)
+document.getElementById('btn2').addEventListener('click', returnIntake)
