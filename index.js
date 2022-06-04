@@ -1,9 +1,7 @@
 const getNames = async (eventId) => {
-  const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
-  const raceDataView = await raceData.json()
-
+  const data = await getData()
   const arrayOfNames = []
-  raceDataView.map((info) => {
+  data.forEach((info) => {
     if(eventId == info.eventId && info.status == 'CONFIRMED'){
       arrayOfNames.push(`${info.firstName} ` + `${info.lastName}`)
     }
@@ -12,11 +10,9 @@ const getNames = async (eventId) => {
 }
 
 const getIntake = async (orgId) => {
-  const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
-  const raceDataView = await raceData.json()
-
+  const data = await getData()
   let sum = 0
-  raceDataView.map((info) => {
+  data.forEach((info) => {
     if(orgId == info.organiserId && info.status == 'CONFIRMED'){
       sum += info.ticketPrice.value
     }
@@ -25,19 +21,24 @@ const getIntake = async (orgId) => {
 }
 
 const dateAndTime = async (eventId) => {
-  const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
-  const raceDataView = await raceData.json()
-
+  const data = await getData()
   const date = []
-  raceDataView.map((info) => {
+  const event = []
+  data.forEach((info) => {
     if(eventId == info.eventId){
       date.push(info.raceStartDate)
+      event.push(info.eventTitle)
     }
   })
   const dateTimeSplit = date[0].split('T')
   const timeOnly = dateTimeSplit[1].split('.')
-  return `Date: ${dateTimeSplit[0].split('-').reverse().join('/')} ` + `Time: ${timeOnly[0]}`
-  
+  return `${event[0]} - ` + `Date: ${dateTimeSplit[0].split('-').reverse().join('/')} - ` + `Time: ${timeOnly[0]}`
+}
+
+const getData = async () => {
+  const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
+  const raceDataView = await raceData.json()
+  return raceDataView
 }
 
 const returnNames = async () => {
@@ -64,4 +65,3 @@ const returndateAndTime = async () => {
 document.getElementById('btn1').addEventListener('click', returnNames)
 document.getElementById('btn2').addEventListener('click', returnIntake)
 document.getElementById('btn3').addEventListener('click', returndateAndTime)
-
