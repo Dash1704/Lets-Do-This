@@ -10,3 +10,5 @@ To use:
 - Click the button to see the results!
 
 <img width="831" alt="Screen Shot 2022-06-04 at 15 16 02" src="https://user-images.githubusercontent.com/93666673/172005795-4f010282-921c-4ced-a48e-efe596e5b0a9.png">
+
+As an extra feature I've included a function which shows what date and time an event is.
