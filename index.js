@@ -3,7 +3,8 @@ const getNames = async (eventId) => {
   const arrayOfNames = []
   data.forEach((info) => {
     if(eventId == info.eventId && info.status == 'CONFIRMED'){
-      arrayOfNames.push(`${info.firstName} ` + `${info.lastName}`)
+      arrayOfNames.push(`${info.firstName} ` + `${info.lastName} ` + `- ${info.ticketTitle} `
+      + `- email: ${info.emailAddress}`)
     }
   })
   return arrayOfNames.join('\r\n')
