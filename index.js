@@ -1,8 +1,8 @@
-const getNames = async (eventId) => {
+const getNames = async (event) => {
   const data = await getData()
   const arrayOfNames = []
   data.forEach((info) => {
-    if(eventId == info.eventId && info.status == 'CONFIRMED'){
+    if(event == info.eventTitle && info.status == 'CONFIRMED'){
       arrayOfNames.push(`${info.firstName} ` + `${info.lastName} ` + `- ${info.ticketTitle} `
       + `- email: ${info.emailAddress}`)
     }
@@ -36,6 +36,23 @@ const dateAndTime = async (eventId) => {
   return `${event[0]} - ` + `Date: ${dateTimeSplit[0].split('-').reverse().join('/')} - ` + `Time: ${timeOnly[0]}`
 }
 
+const refund = async (name) => {
+  const data = await getData()
+  const refundMessage = []
+  data.forEach((info) => {
+    if(name == `${info.firstName} ` + `${info.lastName}` && info.status == 'CONFIRMED'){
+      refundMessage.push(`Hello ${name} ` + `your booking is confirmed and you are eligable for a refund.`)
+    }
+    else if(name == `${info.firstName} ` + `${info.lastName}` && info.status == 'PENDING'){
+      refundMessage.push(`Hello ${name} ` + `your booking is pending and you will be eligable for a refund once the payment has been confirmed`)
+    }
+    else if(name == `${info.firstName} ` + `${info.lastName}` && info.status == 'REFUNDED'){
+      refundMessage.push(`Hello ${name} ` + `your booking has already been refunded`)
+    }
+  })
+  return refundMessage
+}
+
 const getData = async () => {
   const raceData = await fetch('https://ldt-tech-test.herokuapp.com/api/startlistentries')
   const raceDataView = await raceData.json()
@@ -44,10 +61,17 @@ const getData = async () => {
 
 const returnNames = async () => {
   const out1 = document.getElementById('output1')
-  const userInput = document.getElementById('eventid').value
+  const userInput = document.getElementById('event').value
   const namesOnScreen = getNames(userInput)
   out1.innerText = await namesOnScreen
 }
+
+// const returnNames = async () => {
+//   const selectedValue = document.getElementById('list')
+//   const userInput = document.getElementById('event').value
+//   const namesOnScreen = getNames(userInput)
+//   selectedValue.innerText = await namesOnScreen
+// }
 
 const returnIntake = async () => {
   const out2 = document.getElementById('output2')
@@ -63,6 +87,14 @@ const returndateAndTime = async () => {
   out3.innerText = await dateOnScreen
 }
 
+const returnRefundMessage = async () => {
+  const out4 = document.getElementById('output4')
+  const userInput = document.getElementById('refundname').value
+  const refundOnScreen = refund(userInput)
+  out4.innerText = await refundOnScreen
+}
+
 document.getElementById('btn1').addEventListener('click', returnNames)
 document.getElementById('btn2').addEventListener('click', returnIntake)
 document.getElementById('btn3').addEventListener('click', returndateAndTime)
+document.getElementById('btn4').addEventListener('click', returnRefundMessage)

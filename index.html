@@ -8,10 +8,17 @@
 <body>
   <h2>Type in the Event ID  below to see a list of the confirmed runners for a race!</h2>
 
-  <label for="eventid">Event ID Number:</label>
-  <input id="eventid" name="eventid" type="text" required>
+  <label for="event">Event ID Number:</label>
+  <input id="event" name="event" type="text" required>
   <input type="button" id="btn1" value="Enter">
   <p class="output" id="output1"></p>
+
+  <!-- <label>Event Name</label>
+  <select id="list" onchange="returnNames()">
+    <option value='event'>The Great North Run</option>
+    <option value='event'>Great Manchester Run</option>
+    <input type="button" id="btn1" value="Enter">
+  </select> -->
 
   <h2>Type in your Organiser ID  below to see your intake!</h2>
   <label for="organiserid">Organiser ID Number:</label>
@@ -25,6 +32,12 @@
   <input id="dateandtimeid" name="dateandtimeid" type="text" required>
   <input type="button" id="btn3" value="Enter">
   <p class="output" id="output3"></p>
+
+  <h2>Type in your name to see if you are eligable for a refund!</h2>
+  <label for="refundname">Name:</label>
+  <input id="refundname" name="refundname" type="text" required>
+  <input type="button" id="btn4" value="Enter">
+  <p class="output" id="output4"></p>
 
   <script src="index.js"></script>
 </body>
