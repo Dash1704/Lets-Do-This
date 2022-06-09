@@ -10,15 +10,15 @@ const getNames = async (event) => {
   return arrayOfNames.join('\r\n')
 }
 
-const getIntake = async (orgId) => {
+const getIntake = async (orgTitle) => {
   const data = await getData()
   let sum = 0
   data.forEach((info) => {
-    if(orgId == info.organiserId && info.status == 'CONFIRMED'){
+    if(orgTitle == info.organiserTitle && info.status == 'CONFIRMED'){
       sum += info.ticketPrice.value
     }
   })
-  return `Intake: £${sum}`
+  return `Intake: ` + `${(new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'GBP'}).format(sum))}`
 }
 
 const dateAndTime = async (eventId) => {
