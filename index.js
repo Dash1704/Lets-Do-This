@@ -21,12 +21,12 @@ const getIntake = async (orgTitle) => {
   return `Intake: ` + `${(new Intl.NumberFormat('en-GB', {style: 'currency', currency: 'GBP'}).format(sum))}`
 }
 
-const dateAndTime = async (eventId) => {
+const dateAndTime = async (eventName) => {
   const data = await getData()
   const date = []
   const event = []
   data.forEach((info) => {
-    if(eventId == info.eventId){
+    if(eventName == info.eventTitle){
       date.push(info.raceStartDate)
       event.push(info.eventTitle)
     }
@@ -66,13 +66,6 @@ const returnNames = async () => {
   out1.innerText = await namesOnScreen
 }
 
-// const returnNames = async () => {
-//   const selectedValue = document.getElementById('list')
-//   const userInput = document.getElementById('event').value
-//   const namesOnScreen = getNames(userInput)
-//   selectedValue.innerText = await namesOnScreen
-// }
-
 const returnIntake = async () => {
   const out2 = document.getElementById('output2')
   const userInput = document.getElementById('organiserid').value
@@ -98,3 +91,4 @@ document.getElementById('btn1').addEventListener('click', returnNames)
 document.getElementById('btn2').addEventListener('click', returnIntake)
 document.getElementById('btn3').addEventListener('click', returndateAndTime)
 document.getElementById('btn4').addEventListener('click', returnRefundMessage)
+
